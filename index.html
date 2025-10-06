@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darc Decor - Premium Event Decoration Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Custom styles for enhanced visual appeal */
+        .hero-slide {
+            transition: opacity 0.8s ease-in-out;
+        }
+        .sidebar {
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        .card-hover {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .sticky-nav {
+            transition: all 0.3s ease;
+        }
+        .rating-stars {
+            color: #fbbf24;
+        }
+        .auth-modal {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .auth-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <!-- Header with Slideshow -->
+    <header class="relative h-screen overflow-hidden">
+        <!-- Navigation -->
+        <nav class="absolute top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm py-4">
+            <div class="container mx-auto px-4 flex justify-between items-center">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gray-800">Darc Decor</h1>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="text-gray-700 hover:text-gray-900 font-medium">Home</a>
+                    <a href="#services" class="text-gray-700 hover:text-gray-900 font-medium">Services</a>
+                    <a href="#about" class="text-gray-700 hover:text-gray-900 font-medium">About</a>
+                    <a href="#contact" class="text-gray-700 hover:text-gray-900 font-medium">Contact</a>
+                    <button id="auth-btn" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors">
+                        Sign In
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </nav>
+        
+        <!-- Mobile Sidebar -->
+        <div id="sidebar" class="sidebar fixed top-0 left-0 h-full w-64 bg-white z-50 shadow-lg p-6">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-xl font-bold text-gray-800">Darc Decor</h2>
+                <button id="close-sidebar" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col space-y-6">
+                <a href="#home" class="text-gray-700 hover:text-gray-900 font-medium">Home</a>
+                <a href="#services" class="text-gray-700 hover:text-gray-900 font-medium">Services</a>
+                <a href="#about" class="text-gray-700 hover:text-gray-900 font-medium">About</a>
+                <a href="#contact" class="text-gray-700 hover:text-gray-900 font-medium">Contact</a>
+                <button id="mobile-auth-btn" class="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors w-full">
+                    Sign In
+                </button>
+            </div>
+        </div>
+        
+        <!-- Hero Slideshow -->
+        <div id="slideshow" class="h-full relative">
+            <!-- Slide 1 -->
+            <div class="hero-slide absolute inset-0 bg-cover bg-center flex items-center justify-center" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="text-center text-white relative z-10 px-4 max-w-3xl">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6">Elegant Wedding Decorations</h2>
+                    <p class="text-xl mb-8">Transform your special day with our exquisite wedding decoration services</p>
+                    <a href="#services" class="bg-white text-gray-800 px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors">Explore Services</a>
+                </div>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="hero-slide absolute inset-0 bg-cover bg-center flex items-center justify-center opacity-0" style="background-image: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="text-center text-white relative z-10 px-4 max-w-3xl">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6">Memorable Birthday Celebrations</h2>
+                    <p class="text-xl mb-8">Create unforgettable moments with our creative birthday party designs</p>
+                    <a href="#services" class="bg-white text-gray-800 px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors">Explore Services</a>
+                </div>
+            </div>
+            
+            <!-- Slide 3 -->
+            <div class="hero-slide absolute inset-0 bg-cover bg-center flex items-center justify-center opacity-0" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');">
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="text-center text-white relative z-10 px-4 max-w-3xl">
+                    <h2 class="text-4xl md:text-6xl font-bold mb-6">Professional Event Planning</h2>
+                    <p class="text-xl mb-8">From corporate events to intimate gatherings, we bring your vision to life</p>
+                    <a href="#services" class="bg-white text-gray-800 px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition-colors">Explore Services</a>
+                </div>
+            </div>
+            
+            <!-- Slideshow Controls -->
+            <button id="prev-slide" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 bg-black/30 p-2 rounded-full hover:bg-black/50 transition-colors">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button id="next-slide" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl z-10 bg-black/30 p-2 rounded-full hover:bg-black/50 transition-colors">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <!-- Slide Indicators -->
+            <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-10">
+                <button class="slide-indicator w-3 h-3 rounded-full bg-white"></button>
+                <button class="slide-indicator w-3 h-3 rounded-full bg-white/50"></button>
+                <button class="slide-indicator w-3 h-3 rounded-full bg-white/50"></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Services Section -->
+    <section id="services" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Decoration Services</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore our wide range of decoration services for all your special occasions</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+                    <div class="h-56 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">Wedding Decor</h3>
+                            <span class="text-lg font-semibold text-gray-700">$1,200+</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Elegant and romantic wedding decorations tailored to your theme and preferences.</p>
+                        <div class="flex items-center mb-4">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 ml-2">4.5 (128 reviews)</span>
+                        </div>
+                        <button class="prefer-btn w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition-colors">
+                            Prefer This
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 2 -->
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+                    <div class="h-56 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">Birthday Party</h3>
+                            <span class="text-lg font-semibold text-gray-700">$400+</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Fun and creative birthday decorations for all ages, from kids to adults.</p>
+                        <div class="flex items-center mb-4">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 ml-2">4.0 (96 reviews)</span>
+                        </div>
+                        <button class="prefer-btn w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition-colors">
+                            Prefer This
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 3 -->
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+                    <div class="h-56 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">Corporate Events</h3>
+                            <span class="text-lg font-semibold text-gray-700">$800+</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Professional and sophisticated decorations for corporate events and conferences.</p>
+                        <div class="flex items-center mb-4">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 ml-2">5.0 (64 reviews)</span>
+                        </div>
+                        <button class="prefer-btn w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition-colors">
+                            Prefer This
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 4 -->
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+                    <div class="h-56 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1556909114-4d0d853e5e25?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">Anniversary Decor</h3>
+                            <span class="text-lg font-semibold text-gray-700">$600+</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Romantic and memorable anniversary decorations to celebrate your love story.</p>
+                        <div class="flex items-center mb-4">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 ml-2">4.5 (72 reviews)</span>
+                        </div>
+                        <button class="prefer-btn w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition-colors">
+                            Prefer This
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 5 -->
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+                    <div class="h-56 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">Baby Shower</h3>
+                            <span class="text-lg font-semibold text-gray-700">$350+</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Adorable and charming decorations for celebrating the upcoming arrival.</p>
+                        <div class="flex items-center mb-4">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 ml-2">4.0 (58 reviews)</span>
+                        </div>
+                        <button class="prefer-btn w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition-colors">
+                            Prefer This
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service Card 6 -->
+                <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md card-hover">
+                    <div class="h-56 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');"></div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-xl font-bold text-gray-800">Graduation Party</h3>
+                            <span class="text-lg font-semibold text-gray-700">$500+</span>
+                        </div>
+                        <p class="text-gray-600 mb-4">Celebrate academic achievements with our themed graduation decorations.</p>
+                        <div class="flex items-center mb-4">
+                            <div class="rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-600 ml-2">4.5 (42 reviews)</span>
+                        </div>
+                        <button class="prefer-btn w-full bg-gray-800 text-white py-2 rounded-md hover:bg-gray-700 transition-colors">
+                            Prefer This
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">About Darc Decor</h2>
+                <div class="bg-white rounded-lg shadow-md p-8">
+                    <p class="text-gray-600 mb-6">
+                        Darc Decor has been transforming events into unforgettable experiences for over a decade. 
+                        Our team of creative professionals specializes in creating stunning decorations for weddings, 
+                        birthdays, corporate events, and all your special occasions.
+                    </p>
+                    <p class="text-gray-600 mb-6">
+                        We believe that every event tells a story, and our mission is to bring that story to life 
+                        through beautiful, personalized decorations. From intimate gatherings to grand celebrations, 
+                        we work closely with our clients to understand their vision and create magical environments 
+                        that exceed expectations.
+                    </p>
+                    <p class="text-gray-600">
+                        With attention to detail, quality materials, and a passion for design, Darc Decor is your 
+                        trusted partner for creating moments that will be cherished forever.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8 text-center">Contact Us</h2>
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gray-50 rounded-lg p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Get In Touch</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-gray-700 mt-1 mr-3"></i>
+                            <p class="text-gray-600">123 Decor Street, Design District, City, State 12345</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-gray-700 mr-3"></i>
+                            <p class="text-gray-600">+1 (555) 123-4567</p>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-gray-700 mr-3"></i>
+                            <p class="text-gray-600">info@darcdecor.com</p>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <h4 class="text-lg font-bold text-gray-800 mb-4">Follow Us</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-700 hover:text-gray-900">
+                                <i class="fab fa-facebook-f text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-700 hover:text-gray-900">
+                                <i class="fab fa-instagram text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-700 hover:text-gray-900">
+                                <i class="fab fa-pinterest text-xl"></i>
+                            </a>
+                            <a href="#" class="text-gray-700 hover:text-gray-900">
+                                <i class="fab fa-twitter text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Send Us a Message</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 mb-2">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 mb-2">Your Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 mb-2">Your Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800"></textarea>
+                        </div>
+                        <button type="submit" class="bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition-colors w-full">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-2xl font-bold">Darc Decor</h2>
+                    <p class="text-gray-400 mt-2">Creating unforgettable events since 2010</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-pinterest"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400">
+                <p>&copy; 2023 Darc Decor. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="auth-modal fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Sign In</h3>
+                    <button id="close-auth-modal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <form class="space-y-4">
+                    <div>
+                        <label for="auth-email" class="block text-gray-700 mb-2">Email Address</label>
+                        <input type="email" id="auth-email" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800">
+                    </div>
+                    <div>
+                        <label for="auth-password" class="block text-gray-700 mb-2">Password</label>
+                        <input type="password" id="auth-password" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="remember" class="h-4 w-4 text-gray-800 border-gray-300 rounded focus:ring-gray-800">
+                            <label for="remember" class="ml-2 text-gray-700">Remember me</label>
+                        </div>
+                        <a href="#" class="text-gray-700 hover:text-gray-900 text-sm">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition-colors w-full">Sign In</button>
+                </form>
+                <div class="mt-6 text-center">
+                    <p class="text-gray-600">Don't have an account? <a href="#" class="text-gray-800 font-medium hover:text-gray-900">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="auth-modal fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-md">
+            <div class="p-6 text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-check text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Thank You!</h3>
+                <p class="text-gray-600 mb-6">We've noted your preference and will contact you shortly to discuss your event.</p>
+                <button id="close-success-modal" class="bg-gray-800 text-white px-6 py-2 rounded-md hover:bg-gray-700 transition-colors">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const sidebar = document.getElementById('sidebar');
+        const authBtn = document.getElementById('auth-btn');
+        const mobileAuthBtn = document.getElementById('mobile-auth-btn');
+        const authModal = document.getElementById('auth-modal');
+        const closeAuthModal = document.getElementById('close-auth-modal');
+        const preferBtns = document.querySelectorAll('.prefer-btn');
+        const successModal = document.getElementById('success-modal');
+        const closeSuccessModal = document.getElementById('close-success-modal');
+        const prevSlideBtn = document.getElementById('prev-slide');
+        const nextSlideBtn = document.getElementById('next-slide');
+        const slideIndicators = document.querySelectorAll('.slide-indicator');
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        
+        // Slideshow State
+        let currentSlide = 0;
+        const totalSlides = heroSlides.length;
+        
+        // Mobile Menu Toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            sidebar.classList.add('open');
+        });
+        
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+        });
+        
+        // Authentication Modal
+        authBtn.addEventListener('click', () => {
+            authModal.classList.add('active');
+        });
+        
+        mobileAuthBtn.addEventListener('click', () => {
+            authModal.classList.add('active');
+            sidebar.classList.remove('open');
+        });
+        
+        closeAuthModal.addEventListener('click', () => {
+            authModal.classList.remove('active');
+        });
+        
+        // Prefer Button Handler
+        preferBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Check if user is logged in (in a real app, this would check authentication state)
+                const isLoggedIn = false; // This would be set based on actual authentication
+                
+                if (!isLoggedIn) {
+                    authModal.classList.add('active');
+                } else {
+                    successModal.classList.add('active');
+                }
+            });
+        });
+        
+        // Close Success Modal
+        closeSuccessModal.addEventListener('click', () => {
+            successModal.classList.remove('active');
+        });
+        
+        // Slideshow Functions
+        function showSlide(index) {
+            // Hide all slides
+            heroSlides.forEach(slide => {
+                slide.style.opacity = '0';
+            });
+            
+            // Reset indicators
+            slideIndicators.forEach(indicator => {
+                indicator.classList.remove('bg-white');
+                indicator.classList.add('bg-white/50');
+            });
+            
+            // Show current slide
+            heroSlides[index].style.opacity = '1';
+            
+            // Update indicator
+            slideIndicators[index].classList.remove('bg-white/50');
+            slideIndicators[index].classList.add('bg-white');
+            
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            let nextIndex = (currentSlide + 1) % totalSlides;
+            showSlide(nextIndex);
+        }
+        
+        function prevSlide() {
+            let prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+            showSlide(prevIndex);
+        }
+        
+        // Slideshow Event Listeners
+        nextSlideBtn.addEventListener('click', nextSlide);
+        prevSlideBtn.addEventListener('click', prevSlide);
+        
+        // Indicator Click Events
+        slideIndicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+        
+        // Auto-advance slideshow
+        setInterval(nextSlide, 5000);
+        
+        // Initialize first slide
+        showSlide(0);
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === authModal) {
+                authModal.classList.remove('active');
+            }
+            if (e.target === successModal) {
+                successModal.classList.remove('active');
+            }
+        });
+        
+        // Sticky Navigation on Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('sticky-nav', 'bg-white', 'shadow-md');
+                nav.classList.remove('bg-white/80', 'backdrop-blur-sm');
+            } else {
+                nav.classList.remove('sticky-nav', 'bg-white', 'shadow-md');
+                nav.classList.add('bg-white/80', 'backdrop-blur-sm');
+            }
+        });
+
+        //updates made later after the database
+
+        // Add this JavaScript to your frontend HTML file
+
+const API_BASE = 'http://localhost:5000/api';
+
+// Authentication functions
+async function register(userData) {
+  const response = await fetch(`${API_BASE}/auth/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userData),
+  });
+  return await response.json();
+}
+
+async function login(credentials) {
+  const response = await fetch(`${API_BASE}/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  });
+  return await response.json();
+}
+
+async function submitPreference(preferenceData) {
+  const token = localStorage.getItem('token');
+  const response = await fetch(`${API_BASE}/preferences`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify(preferenceData),
+  });
+  return await response.json();
+}
+
+async function getServices() {
+  const response = await fetch(`${API_BASE}/services`);
+  return await response.json();
+}
+
+// Update your existing event listeners to use these API calls
+    </script>
+</body>
+</html>
